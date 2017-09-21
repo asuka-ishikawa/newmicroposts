@@ -7,4 +7,7 @@ class User < ApplicationRecord
   has_secure_password
   #パスワード付きのモデル作成時に使用
   #Rails標準機能
+  
+  has_many :newmicroposts
+  # 一対多
 end

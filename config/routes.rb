@@ -12,4 +12,6 @@ Rails.application.routes.draw do
 #この後uesrscontrollerを作成する
 # command///rails g controller users index show new create
 
+  resources :newmicroposts, only: [:create, :destroy]
+
 end

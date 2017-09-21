@@ -12,3 +12,15 @@ class ApplicationController < ActionController::Base
     end
   end
 end
+
+private
+
+  def require_user_logged_in
+    unless logged_in?
+      redirect_to login_url
+    end
+  end
+  
+  def counts(user)
+    @count_newmicroposts = user.newmicroposts.count
+  end

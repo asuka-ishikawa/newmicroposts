@@ -3,7 +3,8 @@ class ToppagesController < ApplicationController
     if logged_in?
       @user = current_user
       @newmicropost = current_user.newmicroposts.build  # form_for 用
-      @newmicroposts = current_user.newmicroposts.order('created_at DESC').page(params[:page])
+      @newmicroposts = current_user.feed_newmicroposts.order('created_at DESC').page(params[:page])
+      # タイムライン機能///feed_
     end
   end
 end

@@ -36,4 +36,11 @@ class User < ApplicationRecord
     self.followings.include?(other_user)
     # AさんがフォローしているUserを探す・include?(other_user)Bさんとか他ユーザのものが含まれてないか確認
   end
+  
+  def feed_newmicroposts
+    Newmicropost.where(user_id: self.following_ids + [self.id])
+    # following_ids///has_many :followings, から自動生成
+    # self.id///データ型を合わせるため配列にして[self.id]
+    # Micropost.where(user_id: フォローユーザ + 自分自身) となる Micropost を全て取得し
+  end
 end

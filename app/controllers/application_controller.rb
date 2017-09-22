@@ -23,4 +23,6 @@ private
   
   def counts(user)
     @count_newmicroposts = user.newmicroposts.count
+    @count_followings = user.followings.count
+    @count_followers = user.followers.count
   end

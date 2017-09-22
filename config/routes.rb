@@ -7,11 +7,20 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   
   get 'signup', to: 'users#new'
-  resources :users, only: [:index, :show, :new, :create]
-#ユーザ登録用ルーティング
-#この後uesrscontrollerを作成する
-# command///rails g controller users index show new create
+  
+  resources :users, only: [:index, :show, :new, :create] do
+          #ユーザ登録用ルーティング
+          #この後uesrscontrollerを作成する
+          # command///rails g controller users index show new create
+    member do
+      get :followings
+      get :followers
+    end
+  end
+  # URLを深掘りするresourcesオプション・member/collection
+  # memberはid特定する必要があるか
 
   resources :newmicroposts, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
 
 end

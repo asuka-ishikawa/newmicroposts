@@ -1,22 +1,34 @@
 <ul class="media-list">
-  <% newmicroposts.each do |newmicropost| %>
-    <% user = newmicropost.user %>
+  <% newmicroposts.each do |aaa| %>
+    <% user = aaa.user %>
     <li class="media">
       <div class="media-left">
         <img class="media-object img-rounded" src="<%= gravatar_url(user, options = { size: 50 }) %>" alt="">
       </div>
       <div class="media-body">
         <div>
-          <%= link_to user.name, user_path(user) %> <span class="text-muted">posted at <%= newmicropost.created_at %></span>
+          <%= link_to user.name, user_path(user) %> <span class="text-muted">posted at <%= aaa.created_at %></span>
         </div>
         <div>
-          <p><%= newmicropost.content %></p>
+          <p><%= aaa.content %></p>
         </div>
-        <div>
-          <% if current_user == newmicropost.user %>
-            <%= link_to "Delete", newmicropost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-xs' %>
+        <span>
+          <% if current_user == aaa.user %>
+            <%= link_to "Delete", aaa, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-xs' %>
           <% end %>
-        </div>
+        </span>
+        <span class="col-xs-7 col-sm-3 col-lg-2">
+          <%= render 'favorites/favorite_button', newmicropost: aaa %>
+          <!--favoriteボタン宛に送る。今ここで展開した一つ一つのnewmicropostを。-->
+          <!--favoriteボタンで行うこと（favoriteボタンの役割)-->
+          <!--：一つのnewmicropostに対し すでにお気に入り登録済/unfavoriteボタン-->
+          <!--：まだなら/favoriteボタン をだす！　ハイパーボタン-->
+          <!--<%#= render 'favorites/favorite_button', newmicropost: @newmicroposts %>-->
+          
+          <!--変数は生き物みたい。-->
+          <!--sample: aaa　次のファイルまでの命。-->
+          <!--sample: @aaa　処理が終わるまでレスポンスを返すまで寿命が続く。-->
+        </span>
       </div>
     </li>
   <% end %>

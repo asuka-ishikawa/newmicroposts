@@ -15,7 +15,10 @@
       <li class="<%= 'active' if current_page?(user_path(@user)) %>"><%= link_to user_path(@user) do %>NewMicroposts <span class="badge"><%= @count_newmicroposts %></span><% end %></li>
       <li class="<%= 'active' if current_page?(followings_user_path(@user)) %>"><%= link_to followings_user_path(@user) do %>Followings <span class="badge"><%= @count_followings %></span><% end %></li>
       <li class="<%= 'active' if current_page?(followers_user_path(@user)) %>"><%= link_to followers_user_path(@user) do %>Followers <span class="badge"><%= @count_followers %></span><% end %></li>
+      <li class="<%= 'active' if current_page?(favoritings_user_path(@user)) %>"><%= link_to favoritings_user_path(@user) do %>Favoritings <span class="badge"><%= @count_favoritings %></span><% end %></li>
+
     </ul>
     <%= render 'users', users: @followings %>
+    <!--パーシャル（_users.html.erb）の呼び出し users変数に@followingsを入れてパーシャルに渡している-->
   </div>
 </div>

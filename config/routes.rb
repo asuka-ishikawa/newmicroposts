@@ -15,12 +15,16 @@ Rails.application.routes.draw do
     member do
       get :followings
       get :followers
+      get :favoritings
     end
   end
+  # フォロー中のユーザ・フォローされているユーザ一覧表示するページのためのルーティング
   # URLを深掘りするresourcesオプション・member/collection
   # memberはid特定する必要があるか
+  
 
   resources :newmicroposts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
-
+  resources :favorites, only: [:create, :destroy]
+# 中間テーブルはユーザには見せない・viewでボタンを設置する
 end

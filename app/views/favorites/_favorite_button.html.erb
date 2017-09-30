@@ -1,0 +1,13 @@
+<% if current_user.favoriting?(newmicropost) %>
+  <%= form_for(current_user.favorites.find_by(newmicropost_id: newmicropost.id), html: {method: :delete }) do |f| %>
+  <!--現在ユーザはお気に入りに登録するよ/これで探してね/ newmicropostカラム から newmicropostのid を探すんだよ-->
+    <%= hidden_field_tag :newmicropost_id, newmicropost.id %>
+    <!--ユーザに見えない形でデータを送る！そのデータは newmicropost_idというカラム の newmicropostのid だよ-->
+    <%= f.submit 'Unfavorite', class: 'btn btn-danger btn-block btn-xs' %>
+  <% end %>
+<% else %>
+  <%= form_for(current_user.favorites.build) do |f| %>
+    <%= hidden_field_tag :newmicropost_id, newmicropost.id %>
+    <%= f.submit 'Favorite', class: 'btn btn-primary btn-block btn-xs' %>
+  <% end %>
+<% end %>

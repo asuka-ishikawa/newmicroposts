@@ -1,0 +1,54 @@
+<div class="row">
+  <aside class="col-xs-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= @user.name %></h3>
+      </div>
+      <div class="panel-body">
+        <img class="media-object img-rounded img-responsive" src="<%= gravatar_url(@user, { size: 500 }) %>" alt="">
+      </div>
+    </div>
+    <%= render 'relationships/follow_button', user: @user %>
+  </aside>
+  <div class="col-xs-8">
+    <ul class="nav nav-tabs nav-justified">
+      <li class="<%= 'active' if current_page?(user_path(@user)) %>"><%= link_to user_path(@user) do %>NewMicroposts <span class="badge"><%= @count_newmicroposts %></span><% end %></li>
+      <li class="<%= 'active' if current_page?(followings_user_path(@user)) %>"><%= link_to followings_user_path(@user) do %>Followings <span class="badge"><%= @count_followings %></span><% end %></li>
+      <li class="<%= 'active' if current_page?(followers_user_path(@user)) %>"><%= link_to followers_user_path(@user) do %>Followers <span class="badge"><%= @count_followers %></span><% end %></li>
+      <li class="<%= 'active' if current_page?(favoritings_user_path(@user)) %>"><%= link_to favoritings_user_path(@user) do %>Favoritings <span class="badge"><%= @count_favoritings %></span><% end %></li>
+    </ul>
+    
+    <!--current_userが登録した「お気に入り」を表示-->
+    <!--対応するcontroller//users_controllerで定義した favoritings(def favoritings)をここで順次取り出し-->
+    <!--:対応しているusers_controllerで(配列で)定義した@favoritingsはあるか？あれば１つずつ取り出し-->
+    <!--パーシャルを介さずにcontrollerの@favoritingsをそのまま使う-->
+    <% if @favoritings.any? %>
+      <ul class="media-list">
+        <% @favoritings.each do |newmicropost| %>
+          <li class="media">
+            <div class="media-left">
+              <img class="media-object img-rounded" src="<%= gravatar_url(@user, { size: 50 }) %>" alt="">
+                                                    <!--users_controllerの@userを呼び出す(current_user)-->
+            </div>
+            <div class="media-body">
+              <div>
+                <%= link_to newmicropost.user.name, user_path(newmicropost.user) %> <span class="text-muted">posted at <%= newmicropost.created_at %></span>
+                <!-- 一対多 投稿に紐づけられたユーザを呼び出す newmicropost.user 投稿者本人の詳細ページへのリンク-->
+                <!--app/models/micropost.rb///belongs_to :user  &  app/models/user.rb///has_many :micropostsによって-->
+                <!--：このnewmicropostインスタンスを持っているUserを取得可能となる-->
+              </div>
+              <div>
+                <p><%= newmicropost.content %></p>
+              </div>
+              <span class="col-xs-7 col-sm-3 col-lg-2">
+                <%= render 'favorites/favorite_button', newmicropost: newmicropost %>
+              </span>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+      <%= paginate @favoritings %>
+      <!--どこの 子要素なのか要確認-->
+    <% end %>
+  </div>
+</div>

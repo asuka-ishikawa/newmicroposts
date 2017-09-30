@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:index, :show, :followings, :followers]
+  before_action :require_user_logged_in, only: [:index, :show, :followings, :followers, :favoritings]
   def index
     @users = User.all.page(params[:page])
     #全ユーザの一覧表示を代入してviewに渡す
@@ -42,6 +42,13 @@ class UsersController < ApplicationController
     counts(@user)
   end
   
+  def favoritings
+    @user = User.find(params[:id])
+    @favoritings = @user.favoritings.page(params[:page])
+    counts(@user)
+    # application_controllerの def counts を利用する
+  end
+    
   private
   
   def user_params

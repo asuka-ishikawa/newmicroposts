@@ -3,7 +3,7 @@ class CreateRelationships < ActiveRecord::Migration[5.0]
     create_table :relationships do |t|
       t.references :user, foreign_key: true
       t.references :follow, foreign_key: { to_table: :users }
-      # 外部キーとして参照すべきテーブルを指定
+      # 外部キーとして参照すべきテーブルを指定 デフォルトのテーブル以外を指定する場合
 
       t.timestamps
       
